@@ -23,7 +23,7 @@ public class AmountCurrent {
     private String eventId;
     private String accountId;
     private String type;
-    private BigDecimal amount;
+    private double amount;
     private String currency;
 
     private String eventTimestampStr;
