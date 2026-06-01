@@ -43,5 +43,10 @@ public class AmountCurrentController {
         return service.getAccount(id);
     }
 
+    @GetMapping("/accounts/{id}/balance")
+    public List<AmountCurrent> getAccountBalance(@PathVariable String id) {
+        return service.getAccount(id);
+    }
+
 
 }
