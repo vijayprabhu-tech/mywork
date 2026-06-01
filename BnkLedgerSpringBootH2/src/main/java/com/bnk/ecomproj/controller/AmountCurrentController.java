@@ -4,6 +4,7 @@ import com.bnk.ecomproj.model.AmountCurrent;
 import com.bnk.ecomproj.service.AmountCurrentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +27,11 @@ public class AmountCurrentController {
     public List<AmountCurrent> getAllEvents() {
         return service.getAllEvents();
     }
+
+    @GetMapping("/events/{id}")
+    public List<AmountCurrent> getEvent(@PathVariable String id) {
+        return service.getEvent(id);
+    }
+
+
 }

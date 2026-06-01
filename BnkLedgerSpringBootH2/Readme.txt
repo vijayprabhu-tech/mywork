@@ -11,6 +11,7 @@ Java 17
 | `GET` | `/accounts/{accountId}/balance` | Get the current computed balance for an account |
 
 e.g: http://localhost:8080/api/events
+    http://localhost:8080/api/events/evt-001
 
 ## Sample JSON Payload
 {
