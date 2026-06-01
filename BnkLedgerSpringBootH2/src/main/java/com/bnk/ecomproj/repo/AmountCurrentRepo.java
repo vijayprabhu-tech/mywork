@@ -11,4 +11,6 @@ public interface AmountCurrentRepo extends JpaRepository<AmountCurrent, Integer>
     @Query(value = "SELECT * FROM amount_current WHERE event_id =?1", nativeQuery = true)
     List<AmountCurrent> findByEventId(String eventId);
 
+    @Query(value = "SELECT * FROM amount_current WHERE account_id =?1", nativeQuery = true)
+    List<AmountCurrent> findByAccountId(String id);
 }

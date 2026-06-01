@@ -21,4 +21,13 @@ public class AmountCurrentService {
         System.out.println("----------- "+id);
         return repo.findByEventId(id);
     }
+
+    public List<AmountCurrent> getAllAccounts() {
+        return repo.findAll();
+    }
+
+    public List<AmountCurrent> getAccount(String id) {
+        System.out.println("----------- "+id);
+        return repo.findByAccountId(id);
+    }
 }

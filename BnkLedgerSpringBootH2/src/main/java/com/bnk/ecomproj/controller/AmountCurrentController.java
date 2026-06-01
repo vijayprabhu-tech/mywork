@@ -33,5 +33,15 @@ public class AmountCurrentController {
         return service.getEvent(id);
     }
 
+    @GetMapping("/accounts")
+    public List<AmountCurrent> getAllAccounts() {
+        return service.getAllAccounts();
+    }
+
+    @GetMapping("/accounts/{id}")
+    public List<AmountCurrent> getAccount(@PathVariable String id) {
+        return service.getAccount(id);
+    }
+
 
 }
