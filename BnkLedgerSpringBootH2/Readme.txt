@@ -10,10 +10,20 @@ Java 17
 | `GET` | `/events?account={accountId}` | List events for an account, ordered by event timestamp |
 | `GET` | `/accounts/{accountId}/balance` | Get the current computed balance for an account |
 
-e.g: http://localhost:8080/api/events
-    http://localhost:8080/api/events/evt-001
+## Testing URL e.g:
+http://localhost:8080/api/events
+http://localhost:8080/api/events/evt-001
+http://localhost:8080/api/accounts/acct-123
+http://localhost:8080/api/accounts/acct-123/balance
 
-## Sample JSON Payload
+## Reference data for input: Load below data from the resources/data.sql
+  ('evt-001', 'acct-123', 'CREDIT', 750000.00, 'USD', '2024-01-15', '2024-01-15', 'source:mainframe-batch, batchId:B-9042'),
+  ('evt-002', 'acct-123', 'CREDIT', 250010.00, 'USD', '2024-01-16', '2024-01-16', 'source:mainframe-batch, batchId:B-9042'),
+  ('evt-003', 'acct-124', 'CREDIT', 600000.00, 'USD', '2024-01-16', '2024-01-16', 'source:mainframe-batch, batchId:B-9043'),
+  ('evt-005', 'acct-123', 'DEBIT', 500000.00, 'USD', '2024-01-16', '2024-01-16', 'source:mainframe-batch, batchId:B-9043'),
+  ('evt-006', 'acct-125', 'CREDIT', 400000.00, 'USD', '2024-01-17', '2024-01-17', 'source:mainframe-batch, batchId:B-9044');
+
+## Sample JSON Payload - post need to implement
 {
   "eventId": "evt-001",
   "accountId": "acct-123",
