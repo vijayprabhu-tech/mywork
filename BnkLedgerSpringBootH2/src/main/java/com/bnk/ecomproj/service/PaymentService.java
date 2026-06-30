@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import com.bnk.ecomproj.constants.ApplicationConstants;
 import com.bnk.ecomproj.constants.PaymentStatus;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,7 @@ public class PaymentService {
 
         PaymentSession session = new PaymentSession();
         session.setPaymentSessionId(paymentSessionId);
-        ;
-        session.setStatus(PaymentStatus.PENDING);
+        session.setStatus(PaymentStatus.PROCESSING);
         session.setCreatedAt(LocalDateTime.now());
 
         sessionRepository.save(session);
@@ -63,11 +63,12 @@ public class PaymentService {
 
         // STEP 2 - VALIDATE SESSION
         PaymentSession session = sessionRepository.findByPaymentSessionId(request.getPaymentSessionId())
-                .orElseThrow(() -> new RuntimeException("Invalid session"));
+                .orElseThrow(() -> new RuntimeException("Invalid session FAILED"));
 
         // STEP 3 - CHECK STATUS
-        if (session.getStatus() == PaymentStatus.COMPLETED || session.getStatus() == PaymentStatus.FAILED) {
-            throw new RuntimeException("Already transaction is " + session.getStatus());
+        if (session.getStatus() == PaymentStatus.PROCESSED || session.getStatus() == PaymentStatus.FAILED ||  session.getStatus() == PaymentStatus.DUPLICATE) {
+            session.setStatus(PaymentStatus.DUPLICATE);
+            throw new RuntimeException("Already transaction is Done for this request, it's a " + session.getStatus());
         }
 
         // STEP 4 - PROCESS PAYMENT
@@ -79,19 +80,29 @@ public class PaymentService {
         payment.setAmount(request.getAmount());
         payment.setPaymentSessionId(request.getPaymentSessionId());
 
+        if (request.getPaymentType().equalsIgnoreCase(ApplicationConstants.PROCESS_TYPE_CREDIT)){
+            payment.setPaymentType(ApplicationConstants.PROCESS_TYPE_CREDIT);
+        }else if(request.getPaymentType().equalsIgnoreCase(ApplicationConstants.PROCESS_TYPE_DEBIT) ) {
+            payment.setPaymentType(ApplicationConstants.PROCESS_TYPE_DEBIT);
+        }else if(request.getPaymentType().equalsIgnoreCase(ApplicationConstants.PROCESS_TYPE_REVERSAL) ) {
+            payment.setPaymentType(ApplicationConstants.PROCESS_TYPE_REVERSAL);
+        }else{
+            payment.setPaymentType("Invalid");
+        }
+
         paymentRepository.save(payment);
         System.out.println("payment saved");
+
         // STEP 5 - UPDATE SESSION STATUS
-
-        session.setStatus(PaymentStatus.COMPLETED);
+        session.setStatus(PaymentStatus.PROCESSED);
         sessionRepository.save(session);
-    System.out.println("session updated from pending to completed");
-        // STEP 6 - SAVE RESPONSE IN REDIS
-        PaymentResponse response = new PaymentResponse(transactionId, "Success");
+        System.out.println("session updated from PROCESSING to PROCESSED");
 
+        // STEP 6 - SAVE RESPONSE IN REDIS
+        PaymentResponse response = new PaymentResponse(transactionId, "PROCESSED");
         System.out.println("redisTemplate update started : "+redisKey);
         redisTemplate.opsForValue().setIfAbsent(redisKey, response, 10, TimeUnit.MINUTES);
-        System.out.println("redisTemplate update END");
+
         return response;
     }
 }

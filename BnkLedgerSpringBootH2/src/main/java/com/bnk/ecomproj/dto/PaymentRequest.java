@@ -5,6 +5,7 @@ public class PaymentRequest {
     private String paymentSessionId;
     private Double amount;
     private String receiver;
+    private String paymentType;
 
     public String getPaymentSessionId() {
         return paymentSessionId;
@@ -28,6 +29,14 @@ public class PaymentRequest {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 
 }

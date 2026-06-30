@@ -8,6 +8,8 @@ public class PaymentResponse implements Serializable {
     private String status;
     private String errorMessage;
 
+
+
     public PaymentResponse() {
         super();
     }
@@ -45,5 +47,14 @@ public class PaymentResponse implements Serializable {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentResponse{" +
+                "transactionId='" + transactionId + '\'' +
+                ", status='" + status + '\'' +
+                ", errorMessage='" + errorMessage + '\'' +
+                '}';
     }
 }
