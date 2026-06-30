@@ -25,6 +25,9 @@ public class Payment {
     @Column(name = "payment_session_id")
     private String paymentSessionId;
 
+    @Column(name = "payment_type")
+    private String paymentType;
+
     public Long getId() {
         return id;
     }
@@ -63,5 +66,13 @@ public class Payment {
 
     public void setPaymentSessionId(String paymentSessionId) {
         this.paymentSessionId = paymentSessionId;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 }

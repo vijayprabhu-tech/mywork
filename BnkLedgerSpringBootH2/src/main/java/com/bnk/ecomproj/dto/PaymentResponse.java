@@ -1,9 +1,14 @@
 package com.bnk.ecomproj.dto;
 
-public class PaymentResponse {
+import java.io.Serializable;
+
+public class PaymentResponse implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String transactionId;
     private String status;
     private String errorMessage;
+
+
 
     public PaymentResponse() {
         super();
@@ -42,5 +47,14 @@ public class PaymentResponse {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentResponse{" +
+                "transactionId='" + transactionId + '\'' +
+                ", status='" + status + '\'' +
+                ", errorMessage='" + errorMessage + '\'' +
+                '}';
     }
 }
