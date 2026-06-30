@@ -53,7 +53,7 @@ public class PaymentService {
 
         String redisKey = request.getPaymentSessionId() + ":" + idempotencyKey;
 
-        // STEP 1 - CHECK REDIS
+        // STEP 1 - CHECK REDIS - have redisKey key or not
         PaymentResponse cachedResponse = (PaymentResponse) redisTemplate.opsForValue().get(redisKey);
 
         if (cachedResponse != null) {
@@ -80,17 +80,18 @@ public class PaymentService {
         payment.setPaymentSessionId(request.getPaymentSessionId());
 
         paymentRepository.save(payment);
-
+        System.out.println("payment saved");
         // STEP 5 - UPDATE SESSION STATUS
 
         session.setStatus(PaymentStatus.COMPLETED);
         sessionRepository.save(session);
-
+    System.out.println("session updated from pending to completed");
         // STEP 6 - SAVE RESPONSE IN REDIS
         PaymentResponse response = new PaymentResponse(transactionId, "Success");
 
+        System.out.println("redisTemplate update started : "+redisKey);
         redisTemplate.opsForValue().setIfAbsent(redisKey, response, 10, TimeUnit.MINUTES);
-
+        System.out.println("redisTemplate update END");
         return response;
     }
 }

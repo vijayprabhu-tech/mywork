@@ -1,6 +1,9 @@
 package com.bnk.ecomproj.dto;
 
-public class PaymentResponse {
+import java.io.Serializable;
+
+public class PaymentResponse implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String transactionId;
     private String status;
     private String errorMessage;
