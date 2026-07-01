@@ -35,7 +35,7 @@ public class PaymentControllerTest {
             paymentRequest.setPaymentSessionId("ps-123");
             paymentRequest.setAmount(100.50);
             paymentRequest.setReceiver("merchant-001");
-            paymentRequest.setPaymentType("CARD");
+            paymentRequest.setPaymentType("CREDIT");
 
             idempotencyKey = "idem-key-123";
         }
@@ -144,7 +144,7 @@ public class PaymentControllerTest {
                     argThat(req -> req.getPaymentSessionId().equals("ps-123")
                             && req.getAmount().equals(100.50)
                             && req.getReceiver().equals("merchant-001")
-                            && req.getPaymentType().equals("CARD")),
+                            && req.getPaymentType().equals("CREDIT")),
                     eq(idempotencyKey)
             );
         }
