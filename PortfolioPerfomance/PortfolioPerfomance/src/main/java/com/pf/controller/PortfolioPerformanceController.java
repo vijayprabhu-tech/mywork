@@ -1,8 +1,9 @@
-package main.java.com.pf.controller;
+package com.pf.controller;
 
 
-import main.java.com.pf.dto.PortfolioRequest;
-import main.java.com.pf.dto.PortfolioResponse;
+import com.pf.dto.PortfolioRequest;
+import com.pf.dto.PortfolioResponse;
+import com.pf.service.PortfolioPerformanceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,9 @@ public class PortfolioPerformanceController {
     @PostMapping("/performance")
     public ResponseEntity<PortfolioResponse> calculatePerformance(@RequestBody PortfolioRequest request) {
 
+        PortfolioPerformanceService pfService = new PortfolioPerformanceService();
         PortfolioResponse response = new PortfolioResponse();
+        response = pfService.pfValidateAndCalculate(request);
 
         return ResponseEntity.ok(response);
     }

@@ -1,4 +1,6 @@
-package main.java.com.pf.dto;
+package com.pf.dto;
+
+import java.util.ArrayList;
 
 public class PortfolioResponse {
 
@@ -8,7 +10,7 @@ public class PortfolioResponse {
     private double benchmarkReturnPct;
     private double exessReturnPct;
     private String status;
-    private String[] reasons;
+    private ArrayList<String> reasons;
     private String processedAt;
 
     public String getPortfolioId() {
@@ -59,11 +61,11 @@ public class PortfolioResponse {
         this.status = status;
     }
 
-    public String[] getReasons() {
+    public ArrayList<String> getReasons() {
         return reasons;
     }
 
-    public void setReasons(String[] reasons) {
+    public void setReasons(ArrayList<String> reasons) {
         this.reasons = reasons;
     }
 

@@ -1,4 +1,4 @@
-package main.java.com.pf.dto;
+package com.pf.dto;
 
 
 public class PortfolioRequest {

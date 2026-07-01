@@ -1,4 +1,4 @@
-package main.java.com.pf.constants;
+package com.pf.constants;
 
 public final class ApplicationConstants {
 
