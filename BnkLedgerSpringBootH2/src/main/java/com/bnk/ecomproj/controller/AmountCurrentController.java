@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/gapi")
 public class AmountCurrentController {
 
     @Autowired
@@ -76,24 +76,5 @@ public class AmountCurrentController {
     }
 
     /// //////////////////////////////////
-
-
-
-    @PostMapping(value = "/payment-sessions")
-    public PaymentSessionResponse createSession() {
-        return PayServices.createSession();
-    }
-
-    @PostMapping(value = "/payments")
-    public PaymentResponse makePayment(@RequestHeader("Idempotency-Key") String idempotencyKey,
-                                       @RequestBody PaymentRequest request) {
-        try {
-			return PayServices.processPayment(request, idempotencyKey);
-    //        return service.processPaymentWithLockMech(request, idempotencyKey);
-        } catch (Exception e) {
-            System.err.println("Error during processing payment: " + e.getMessage());
-            return new PaymentResponse(e.getMessage());
-        }
-    }
 
 }
