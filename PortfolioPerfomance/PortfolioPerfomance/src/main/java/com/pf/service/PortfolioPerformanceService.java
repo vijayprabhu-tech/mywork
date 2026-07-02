@@ -26,6 +26,15 @@ public class PortfolioPerformanceService {
 
             if (beginValue > 0) {
                 pfReturns = ((endValue - beginValue - netFlow) / beginValue) * 100;
+
+                if (Math.abs(pfReturns - benchMarkPct) > 5) {
+                    status = ApplicationConstants.PORTFOLIO_STATUS_REVIEW_REQUIRED;
+                } else if (netFlow > beginValue * 0.20) {
+                    status = ApplicationConstants.PORTFOLIO_STATUS_REVIEW_REQUIRED;
+                } else {
+                    status = ApplicationConstants.PORTFOLIO_STATUS_VALID;
+                }
+
             } else {
                 status = ApplicationConstants.PORTFOLIO_STATUS_INVALID_INPUT;
             }
@@ -36,13 +45,7 @@ public class PortfolioPerformanceService {
             status = ApplicationConstants.PORTFOLIO_STATUS_INVALID_INPUT;
         }
 
-        if (Math.abs(pfReturns - benchMarkPct) > 5) {
-            status = ApplicationConstants.PORTFOLIO_STATUS_REVIEW_REQUIRED;
-        } else if (netFlow > beginValue * 0.20) {
-            status = ApplicationConstants.PORTFOLIO_STATUS_REVIEW_REQUIRED;
-        } else {
-            status = ApplicationConstants.PORTFOLIO_STATUS_VALID;
-        }
+
 
         pfResponseObj.setPortfolioId(pfObject.getPortfolioId());
         pfResponseObj.setValuationDate(pfObject.getValuationDate());
